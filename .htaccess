@@ -1,0 +1,22 @@
+# Fix MIME types for JS, CSS, SVG
+AddType application/javascript .js
+AddType text/css .css
+AddType image/svg+xml .svg
+
+# Handle client-side routing in React (SPA fallback)
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>
+
+# Cache static assets
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType application/javascript "access plus 1 month"
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType image/svg+xml "access plus 1 year"
+</IfModule>
